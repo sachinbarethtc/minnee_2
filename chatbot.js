@@ -9,7 +9,7 @@
 
   async function load() {
     // 2️⃣ Fetch full HTML content
-    const res = await fetch(`${BASE_URL}/index.html`);
+    const res = await fetch(`https://sachinbarethtc.github.io/minnee`);
     const html = await res.text();
 
     // 3️⃣ Create temporary container
