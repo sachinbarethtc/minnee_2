@@ -1,51 +1,45 @@
 (function () {
-  const BASE_URL = "https://minnee.onrender.com";
+    // ---- Chat Button ----
+    const chatBtn = document.createElement('div');
+    chatBtn.id = 'myChatbotButton';
+    chatBtn.innerHTML = ':speech_balloon: Chat';
+    chatBtn.style.position = 'fixed';
+    chatBtn.style.bottom = '20px';
+    chatBtn.style.right = '20px';
+    chatBtn.style.background = '#4A90E2';
+    chatBtn.style.color = 'white';
+    chatBtn.style.padding = '12px 18px';
+    chatBtn.style.borderRadius = '25px';
+    chatBtn.style.cursor = 'pointer';
+    chatBtn.style.fontFamily = 'Arial, sans-serif';
+    chatBtn.style.zIndex = '999999';
+    chatBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+    document.body.appendChild(chatBtn);
 
-  // 1️⃣ Load CSS
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = `${BASE_URL}/css/style.css`;
-  document.head.appendChild(link);
+    let widgetFrame = null;
 
-  async function load() {
-    // 2️⃣ Fetch full HTML content
-    const res = await fetch(`https://sachinbarethtc.github.io/minnee/index.html`);
-    const html = await res.text();
+    // ---- Toggle Chat Widget ----
+    chatBtn.onclick = () => {
+        if (widgetFrame) {
+            // Hide if already open
+            widgetFrame.remove();
+            widgetFrame = null;
+            return;
+        }
 
-    // 3️⃣ Create temporary container
-    const temp = document.createElement("div");
-    temp.innerHTML = html;
+        // ---- Create iframe ----
+        widgetFrame = document.createElement('iframe');
+        widgetFrame.src = 'https://minnee.onrender.com/index.html'; // <-- CHANGE THIS
+        widgetFrame.style.position = 'fixed';
+        widgetFrame.style.bottom = '70px';
+        widgetFrame.style.right = '20px';
+        widgetFrame.style.width = '350px';
+        widgetFrame.style.height = '500px';
+        widgetFrame.style.border = 'none';
+        widgetFrame.style.borderRadius = '12px';
+        widgetFrame.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
+        widgetFrame.style.zIndex = '999999';
 
-    // 4️⃣ Extract YOUR chatbot + YOUR button
-    const chatbot = temp.querySelector("#chatbot");
-    const openBtn = temp.querySelector("#openChat");
-
-    if (!chatbot || !openBtn) {
-      console.error("❌ Chatbot elements not found in index.html");
-      return;
-    }
-
-    // 5️⃣ Add to client website
-    document.body.appendChild(chatbot);
-    document.body.appendChild(openBtn);
-
-    // 6️⃣ Make sure positioning works like widget
-    chatbot.style.position = "fixed";
-    chatbot.style.bottom = "80px";
-    chatbot.style.right = "40px";
-    chatbot.style.zIndex = "999999";
-
-    openBtn.style.zIndex = "1000000";
-    openBtn.style.position = "fixed";
-    openBtn.style.bottom = "40px";
-    openBtn.style.right = "40px";
-
-    // 7️⃣ Now load your JS logic AFTER element mounted
-    const script = document.createElement("script");
-    script.src = `${BASE_URL}/js/script.js`;
-    script.defer = true;
-    document.body.appendChild(script);
-  }
-
-  document.addEventListener("DOMContentLoaded", load);
+        document.body.appendChild(widgetFrame);
+    };
 })();
